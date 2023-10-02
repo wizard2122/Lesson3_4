@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MovementHandler
+public class MovementHandler: IDisposable
 {
     private IInput _input;
 
@@ -16,7 +16,12 @@ public class MovementHandler
         _input.Drag += OnDrag;
     }
 
-    //Œ“œ»— »
+    public void Dispose()
+    {
+        _input.ClickDown -= OnClickDown;
+        _input.ClickUp -= ClickUp;
+        _input.Drag -= OnDrag;
+    }
 
     private void OnClickDown(Vector3 position)
     {

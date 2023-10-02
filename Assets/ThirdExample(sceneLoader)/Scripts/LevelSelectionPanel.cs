@@ -1,8 +1,15 @@
 using UnityEngine;
+using Zenject;
 
 public class LevelSelectionPanel : MonoBehaviour
 {
     [SerializeField] private LevelSelectionButton[] _levelSelectionButtons;
+
+    private ISceneLoadMediator _sceneLoader;
+
+    [Inject]
+    private void Construct(ISceneLoadMediator sceneLoadMediator)
+        => _sceneLoader = sceneLoadMediator;
 
     private void OnEnable()
     {
@@ -17,7 +24,5 @@ public class LevelSelectionPanel : MonoBehaviour
     }
 
     private void OnLevelSelected(int level)
-    {
-        //загрузить уровень
-    }
+        => _sceneLoader.GoToGameplayLevel(new LevelLoadingData(level));
 }
